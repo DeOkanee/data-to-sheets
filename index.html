@@ -238,6 +238,7 @@
             var kelas = document.getElementById("kelas").value;
             var semester = document.getElementById("semester").value;
             var alamat = document.getElementById("alamat").value;
+            var uploadfile = document.getElementById("uploadfile").value;
 
             if (
               nim === "" ||
@@ -247,7 +248,8 @@
               (!gender_laki && !gender_perempuan) ||
               kelas === "" ||
               semester === "" ||
-              alamat === ""
+              alamat === "" ||
+              uploadfile === ""
             ) {
               const Toast = Swal.mixin({
                 toast: true,
