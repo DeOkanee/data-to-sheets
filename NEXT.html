@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Form</title>
+    <!--<link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css"
+    />-->
+    <link rel="stylesheet" href="style.css" />
+    <!-- Include SweetAlert -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  </head>
+  <body>
+    <header>
+      <div class="logo-left">
+        <img src="https://i.ibb.co/sRcHhgH/LOGO-UHN-01.png" alt="Logo Left" />
+      </div>
+      <div class="title">
+        <h1>Data</h1>
+      </div>
+      <div class="logo-right">
+        <img src="https://i.ibb.co/fnDpv0Q/LOGO-ORKEMAS.png" alt="Logo Right" />
+      </div>
+    </header>
+    <div id="data-terimpan" style="display: none">
+      <p>Data Anda sudah tersimpan.</p>
+      <a href="#">Kembali</a>
+    </div>
+    <section id="form-section" class="kotak">
+      <div class="text">
+        <h2>Input Data Diri Anda</h2>
+      </div>
+      <form
+        id="form"
+        class="container m-4 pl-4"
+        method="POST"
+        enctype="multipart/form-data"
+      >
+        <div class="field">
+          <label class="label">NIM</label>
+          <div class="control">
+            <input
+              class="input"
+              type="text"
+              placeholder="Your NIM"
+              name="NIM"
+              id="nim"
+            />
+          </div>
+        </div>
+
+        <div class="field">
+          <label class="label">Name</label>
+          <div class="control">
+            <input
+              class="input"
+              type="text"
+              placeholder="Your Name"
+              name="Name"
+              id="name"
+            />
+          </div>
+        </div>
+
+        <div class="field">
+          <label class="label">Email</label>
+          <div class="control">
+            <input
+              class="input"
+              type="email"
+              placeholder="Your Email"
+              name="Email"
+              id="email"
+            />
+          </div>
+        </div>
+
+        <div class="field">
+          <label class="label">Tanggal</label>
+          <div class="control">
+            <input
+              class="input"
+              type="date"
+              placeholder="Your Date of Birth"
+              name="Tanggal"
+              id="tanggal"
+            />
+          </div>
+        </div>
+
+        <div class="field">
+          <label class="label">Gender</label>
+          <div class="control">
+            <label class="radio">
+              <input
+                type="radio"
+                name="Gender"
+                value="Laki-laki"
+                id="gender_laki"
+              />
+              Laki-laki
+            </label>
+            <label class="radio">
+              <input
+                type="radio"
+                name="Gender"
+                value="Perempuan"
+                id="gender_perempuan"
+              />
+              Perempuan
+            </label>
+          </div>
+        </div>
+
+        <div class="field">
+          <label class="label">Kelas</label>
+          <div class="control">
+            <input
+              class="input"
+              type="text"
+              placeholder="Your Class"
+              name="Kelas"
+              id="kelas"
+            />
+          </div>
+        </div>
+
+        <div class="field">
+          <label class="label">Semester</label>
+          <div class="control">
+            <input
+              class="input"
+              type="text"
+              placeholder="Your Semester"
+              name="Semester"
+              id="semester"
+            />
+          </div>
+        </div>
+
+        <div class="field">
+          <label class="label">Alamat</label>
+          <div class="control">
+            <textarea
+              class="textarea"
+              placeholder="Your Address"
+              name="Alamat"
+              id="alamat"
+            ></textarea>
+          </div>
+        </div>
+
+        <!--<div class="field">
+          <label class="label">Pesan</label>
+          <div class="control">
+            <textarea
+              class="textarea"
+              placeholder="Any additional information"
+              name="Pesan"
+              id="pesan"
+            ></textarea>
+          </div>
+        </div>-->
+
+        <div class="field is-grouped">
+          <div class="control">
+            <button class="button is-primary" type="submit" id="submit-button">
+              kirim
+            </button>
+          </div>
+        </div>
+      </form>
+    </section>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        var storedFormData = localStorage.getItem("formData");
+
+        if (storedFormData) {
+          // Show the saved data text
+          document.getElementById("data-terimpan").style.display = "block";
+          document.getElementById("form-section").style.display = "none";
+        }
+
+        document
+          .getElementById("form")
+          .addEventListener("submit", function (e) {
+            e.preventDefault(); // Prevent the default form submission
+            var nim = document.getElementById("nim").value;
+            var name = document.getElementById("name").value;
+            var email = document.getElementById("email").value;
+            var tanggal = document.getElementById("tanggal").value;
+            var gender_laki = document.getElementById("gender_laki").checked;
+            var gender_perempuan =
+              document.getElementById("gender_perempuan").checked;
+            var kelas = document.getElementById("kelas").value;
+            var semester = document.getElementById("semester").value;
+            var alamat = document.getElementById("alamat").value;
+
+            if (
+              nim === "" ||
+              name === "" ||
+              email === "" ||
+              tanggal === "" ||
+              (!gender_laki && !gender_perempuan) ||
+              kelas === "" ||
+              semester === "" ||
+              alamat === ""
+            ) {
+              const Toast = Swal.mixin({
+                toast: true,
+                position: "top-end",
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                  toast.onmouseenter = Swal.stopTimer;
+                  toast.onmouseleave = Swal.resumeTimer;
+                },
+              });
+              Toast.fire({
+                icon: "error",
+                text: "Harap lengkapi semua data!",
+              });
+              return;
+            }
+
+            // Save form data status to localStorage
+            localStorage.setItem("formData", "filled");
+
+            const Toast = Swal.mixin({
+              toast: true,
+              position: "top-end",
+              showConfirmButton: false,
+              timer: 3000,
+              timerProgressBar: true,
+              didOpen: (toast) => {
+                toast.onmouseenter = Swal.stopTimer;
+                toast.onmouseleave = Swal.resumeTimer;
+              },
+            });
+            Toast.fire({
+              icon: "info",
+              title: "Sedang mengirim!",
+            });
+
+            // Collect the form data
+            var formData = new FormData(this);
+            var keyValuePairs = [];
+            for (var pair of formData.entries()) {
+              keyValuePairs.push(pair[0] + "=" + pair[1]);
+            }
+
+            var formDataString = keyValuePairs.join("&");
+
+            // Send a POST request to your Google Apps Script
+            fetch(
+              "https://script.google.com/macros/s/AKfycbwwGdvBw2wuWehGwe_5CwhCjazp1BQhSv2HdFlg7qTV8i0DTf5ZTcUrR9SwDWbOSss/exec",
+              {
+                redirect: "follow",
+                method: "POST",
+                body: formDataString,
+                headers: {
+                  "Content-Type": "text/plain;charset=utf-8",
+                },
+              }
+            )
+              .then(function (response) {
+                // Check if the request was successful
+                if (response) {
+                  // Hide the form section
+                  document.getElementById("form-section").style.display =
+                    "none";
+
+                  // Show the saved data text
+                  document.getElementById("data-terimpan").style.display =
+                    "block";
+
+                  // Show success message
+                  const Toast = Swal.mixin({
+                    toast: true,
+                    position: "top-end",
+                    showConfirmButton: false,
+                    timer: 3000,
+                    timerProgressBar: true,
+                    didOpen: (toast) => {
+                      toast.onmouseenter = Swal.stopTimer;
+                      toast.onmouseleave = Swal.resumeTimer;
+                    },
+                  });
+                  Toast.fire({
+                    icon: "success",
+                    title: "Data sukses terkirim!",
+                  });
+
+                  document.getElementById("submit-button").disabled = false;
+                  document.getElementById("form").reset();
+                } else {
+                  throw new Error("Gagal mengirimkan formulir.");
+                }
+              })
+
+              .catch(function (error) {
+                // Handle errors, you can display an error message here
+                console.error(error);
+                const Toast = Swal.mixin({
+                  toast: true,
+                  position: "top-end",
+                  showConfirmButton: false,
+                  timer: 3000,
+                  timerProgressBar: true,
+                  didOpen: (toast) => {
+                    toast.onmouseenter = Swal.stopTimer;
+                    toast.onmouseleave = Swal.resumeTimer;
+                  },
+                });
+                Toast.fire({
+                  icon: "error",
+                  title: "Terjadi kesalahan saat mengirimkan formulir.",
+                });
+              });
+          });
+      });
+    </script>
+    <script>
+      // Check if form data is stored in local storage
+      document.addEventListener("DOMContentLoaded", function () {
+        var storedFormData = localStorage.getItem("formData");
+
+        if (storedFormData) {
+          // Show a message indicating that the form has been filled
+          Swal.fire({
+            icon: "info",
+            title: "Anda sudah mengisi formulir ini",
+            text: "Data Anda sudah tersimpan.",
+          });
+        }
+      });
+    </script>
+  </body>
+</html>
