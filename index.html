@@ -14,22 +14,13 @@
   </head>
   <body>
     <header>
-      <div
-        class="logo-left"
-        onclick="window.open('https://uhnsugriwa.ac.id/');"
-        style="cursor: pointer"
-      >
+      <div class="logo-left">
         <img src="https://i.ibb.co/sRcHhgH/LOGO-UHN-01.png" alt="Logo Left" />
       </div>
-
       <div class="title">
         <h1>Data</h1>
       </div>
-      <div
-        class="logo-right"
-        onclick="window.open('https://www.instagram.com/orkemas_fda/');"
-        style="cursor: pointer"
-      >
+      <div class="logo-right">
         <img src="https://i.ibb.co/fnDpv0Q/LOGO-ORKEMAS.png" alt="Logo Right" />
       </div>
     </header>
@@ -37,10 +28,12 @@
       <p>Data Anda sudah tersimpan.</p>
       <a href="#">Kembali</a>
     </div>
+
     <section id="form-section" class="kotak">
       <div class="text">
         <h2>Input Data Diri Anda</h2>
       </div>
+
       <form
         id="form"
         class="container m-4 pl-4"
@@ -53,7 +46,7 @@
             <input
               class="input"
               type="text"
-              placeholder="Your NIM"
+              placeholder="NIM"
               name="NIM"
               id="nim"
             />
@@ -66,7 +59,7 @@
             <input
               class="input"
               type="text"
-              placeholder="Your Name"
+              placeholder="Name Lengkap"
               name="Name"
               id="name"
             />
@@ -79,7 +72,7 @@
             <input
               class="input"
               type="email"
-              placeholder="Your Email"
+              placeholder="Email Aktif"
               name="Email"
               id="email"
             />
@@ -87,12 +80,12 @@
         </div>
 
         <div class="field">
-          <label class="label">Tanggal</label>
+          <label class="label">Tanggal Lahir</label>
           <div class="control">
             <input
               class="input"
               type="date"
-              placeholder="Your Date of Birth"
+              placeholder="Tanggal Lahir"
               name="Tanggal"
               id="tanggal"
             />
@@ -129,7 +122,7 @@
             <input
               class="input"
               type="text"
-              placeholder="Your Class"
+              placeholder="kelas"
               name="Kelas"
               id="kelas"
             />
@@ -142,7 +135,7 @@
             <input
               class="input"
               type="text"
-              placeholder="Your Semester"
+              placeholder="Semester"
               name="Semester"
               id="semester"
             />
@@ -154,66 +147,36 @@
           <div class="control">
             <textarea
               class="textarea"
-              placeholder="Your Address"
+              placeholder="Alamat Lengkap"
               name="Alamat"
               id="alamat"
             ></textarea>
           </div>
         </div>
 
-        <!--<div class="field">
-          <label class="label">Pesan</label>
-          <div class="control">
-            <textarea
-              class="textarea"
-              placeholder="Any additional information"
-              name="Pesan"
-              id="pesan"
-            ></textarea>
-          </div>
-        </div>-->
-
-        <!-- <div class="field" >
-          <label class="label">Upload PDF File</label>
-          <div class="control">
-            <input
-              class="input"
-              type="file"
-              accept="application/pdf"
-              name="PDFFile"
-              id="pdf-file"
-            />
-          </div>
-        </div>-->
-
         <div class="field">
-          <label class="label">Upload File</label>
+          <label class="label">Upload Berkas Disini</label>
           <div class="control">
             <input name="file" class="input" id="uploadfile" type="file" />
           </div>
         </div>
-        <div class="field" style="display: none;">
-          <label class="label">Masukkan Nama File</label>
+        <div class="field">
+          <label class="label">Masukkan Nama Berkas</label>
           <div class="control">
-            <input name="filename" class="input" id="filename" type="text" />
+            <input name="filename" class="input" id="filename" type="text" placeholder="contoh: Berkas_I Made Oka kembarisna" />
           </div>
         </div>
 
         <div class="field is-grouped">
           <div class="control">
             <button class="button is-primary" type="submit" id="submit-button">
-              Kirim
-            </button>
-            <button class="button is-primary" style="display: none">
-              <a href="NEXT.html" style="color: white; text-decoration: none"
-                >Next</a
-              >
+              kirim
             </button>
           </div>
         </div>
       </form>
     </section>
-
+    <script src="kirim ke drive.js"></script>
     <script>
       document.addEventListener("DOMContentLoaded", function () {
         var storedFormData = localStorage.getItem("formData");
@@ -238,7 +201,6 @@
             var kelas = document.getElementById("kelas").value;
             var semester = document.getElementById("semester").value;
             var alamat = document.getElementById("alamat").value;
-            var uploadfile = document.getElementById("uploadfile").value;
 
             if (
               nim === "" ||
@@ -248,8 +210,7 @@
               (!gender_laki && !gender_perempuan) ||
               kelas === "" ||
               semester === "" ||
-              alamat === "" ||
-              uploadfile === ""
+              alamat === ""
             ) {
               const Toast = Swal.mixin({
                 toast: true,
@@ -299,7 +260,7 @@
 
             // Send a POST request to your Google Apps Script
             fetch(
-              "https://script.google.com/macros/s/AKfycbyCsePJEAMHKSMLRaQQJ1giTRKiB_btSQmiBQ9Y5ND3dST7rBr7wVbMoURCuM5-j37l/exec",
+              "https://script.google.com/macros/s/AKfycbwuuXOEPhy8ISikdo1GB10cLBnAGPvLmL7KT5MDZqZmgaetSRSOUbOb0CwIpBWIIiOtQQ/exec",
               {
                 redirect: "follow",
                 method: "POST",
@@ -366,6 +327,7 @@
           });
       });
     </script>
+
     <script>
       // Check if form data is stored in local storage
       document.addEventListener("DOMContentLoaded", function () {
@@ -379,32 +341,6 @@
             text: "Data Anda sudah tersimpan.",
           });
         }
-      });
-    </script>
-    <script>
-      // data file masuk
-      const form = document.getElementById("form");
-      form.addEventListener("submit", (e) => {
-        e.preventDefault();
-        const file = form.file.files[0];
-        const fr = new FileReader();
-        fr.readAsArrayBuffer(file);
-        fr.onload = (f) => {
-          const url =
-            "https://script.google.com/macros/s/AKfycbyCsePJEAMHKSMLRaQQJ1giTRKiB_btSQmiBQ9Y5ND3dST7rBr7wVbMoURCuM5-j37l/exec"; // <--- Please set the URL of Web Apps.
-
-          const qs = new URLSearchParams({
-            filename: form.filename.value || file.name,
-            mimeType: file.type,
-          });
-          fetch(`${url}?${qs}`, {
-            method: "POST",
-            body: JSON.stringify([...new Int8Array(f.target.result)]),
-          })
-            .then((res) => res.json())
-            .then((e) => console.log(e)) // response appscript
-            .catch((err) => console.log(err));
-        };
       });
     </script>
   </body>
